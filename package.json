@@ -4,7 +4,7 @@
   "description": "agendapp - api project",
   "main": "app.js",
   "scripts": {
-    "start": "node --experimental-modules app.js",
+    "start": "node --es-module-specifier-resolution=node app.js",
     "start:dev": "nodemon --es-module-specifier-resolution=node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
