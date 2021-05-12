@@ -11,7 +11,8 @@
   "author": "jsuazag",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.12.8"
   },
   "type": "module",
   "devDependencies": {

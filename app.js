@@ -1,7 +1,9 @@
 import express from "express";
+import mongodb from './connection/mongoconn';
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 const PORT = process.env.PORT || 4000;
 
 import api from './api';
