@@ -4,7 +4,7 @@ const route = Router();
 
 export default (app) => {
     app.use('/users', route);
-    route.post('/', usersController.create);
+    // route.post('/', usersController.create);
     route.get('/', usersController.getAll);
     route.get('/profile', usersController.profile);
 };
