@@ -40,7 +40,21 @@ const create = async ({ name, role, email, password }) => {
   }
 };
 
+const getAll = async () => {
+  try {
+    const users = await UserModel.find();
+    return users;
+  } catch (error) {
+    throw Error({ 
+      message: error.message || ErrorTypes.DATABASE_QUERY,
+      errorStatus: error.errorStatus,
+      stackTrace: error.stackTrace,
+    });
+  }
+}
+
 export default {
   create,
-  validate
+  validate,
+  getAll
 };
