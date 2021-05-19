@@ -17,7 +17,7 @@ const singup = async (req, res) => {
         const user = await usersService.create(userData);
         res.json(user);
     } catch (error) {
-        res.status(500).send('Error creating user');
+        res.status(error.errorStatus).send(error.message);
     }
 }
 

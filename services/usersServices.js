@@ -10,11 +10,12 @@ const validate = async ({ email, password }) => {
       // TODO: generar token
       return { token };
     }
-    throw Error({ errorType: ErrorTypes.AUTHENCATION, errorStatus: 401 });
+    throw Error({ message: ErrorTypes.AUTHENCATION, errorStatus: 401 });
   } catch (error) {
     throw Error({ 
-      errorType: ErrorTypes.DATABASE_QUERY, 
-      stackTrace: error.message || error
+      message: error.message || ErrorTypes.DATABASE_QUERY,
+      errorStatus: error.errorStatus,
+      stackTrace: error.stackTrace || error
     });
   } 
 }
@@ -31,7 +32,11 @@ const create = async ({ name, role, email, password }) => {
     await user.save();
     return user;
   } catch (error) {
-    throw error;
+    throw Error({ 
+      message: error.message || ErrorTypes.DATABASE_QUERY,
+      errorStatus: error.errorStatus,
+      stackTrace: error.stackTrace,
+    });
   }
 };
 

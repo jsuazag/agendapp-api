@@ -1,9 +1,8 @@
-import ErrorTypes from './ErrorTypes';
-
-export default Error = ({ errorType, errorStatus = 500, stackTrace = "" }) => {
-  return {
-    message: ErrorTypes[errorType] || ErrorTypes.UNDEFINED,
+export default Error = ({ message, errorStatus = 500, stackTrace = "" }) => {
+  const error = {
+    message,
     errorStatus,
     stackTrace,
   };
+  return error;
 };
