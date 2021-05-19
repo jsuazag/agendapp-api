@@ -1,7 +1,14 @@
 import usersService from '../services/usersServices';
 
-const singin = (req, res) => {
-    res.send('signin');
+const singin = async (req, res) => {
+    try {
+        const credentials = req.body;
+        const response = await usersService.validate(credentials);
+        res.json(response);
+    } catch (error) {
+        console.log(error.message, error.stackTrace);
+        res.status(error.errorStatus).send(error.message);
+    }
 }
 
 const singup = async (req, res) => {
