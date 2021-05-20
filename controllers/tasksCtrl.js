@@ -18,10 +18,20 @@ const create = async (req, res) => {
         res.status(error.errorStatus).send(error.message);
     }
 }
-const getAll = (req, res) => {
-    res.send('get all tasks with filters');
+
+const getAll = async (req, res) => { // status? due_date_init? / due_date_end?
+    try {
+        const query = req.query;
+        const tasks = await tasksServices.getAll(query);
+        res.json(tasks);
+    } catch (error) {
+        res.status(error.errorStatus).send(error.message);
+    }
 }
 const updateStatus = (req, res) => {
+    const {status} = req.query;
+    const {id} = req.params;
+    // cambiar el estado de la tarea updateStatus(id, status)
     res.send('update status task');
 }
 
