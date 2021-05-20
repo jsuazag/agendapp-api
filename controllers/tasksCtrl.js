@@ -28,11 +28,15 @@ const getAll = async (req, res) => { // status? due_date_init? / due_date_end?
         res.status(error.errorStatus).send(error.message);
     }
 }
-const updateStatus = (req, res) => {
-    const {status} = req.query;
-    const {id} = req.params;
-    // cambiar el estado de la tarea updateStatus(id, status)
-    res.send('update status task');
+const updateStatus = async (req, res) => {
+    try {
+        const {status} = req.query;
+        const {id} = req.params;
+        const response = await tasksServices.updateStatus(id, status);
+        res.json(response);
+    } catch (error) {
+        res.status(error.errorStatus).send(error.message);
+    }
 }
 
 export default {

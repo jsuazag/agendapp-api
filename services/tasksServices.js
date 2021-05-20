@@ -30,8 +30,7 @@ const create = async ({
 
 const detail = async (id) => {
   try {
-    const query = { "_id": id };
-    const task = await TaskModel.find(query)
+    const task = await TaskModel.findById(id)
       .populate("responsible", "name email")
       .populate("collaborators", "name email")
       .exec();
@@ -51,7 +50,10 @@ const getAll = async ({ status, due_date_init, due_date_end }) => {
     const query = {};
     if (status) query['status'] = status;
     if (due_date_init && due_date_end) {
-      query['due_date'] = { '$gte': due_date_init, '$lte': due_date_end };
+      query['due_date'] = { 
+        '$gte': due_date_init, 
+        '$lte': due_date_end 
+      };
     }
     const tasks = await TaskModel.find(query)
       .populate("responsible", "name email")
@@ -67,8 +69,30 @@ const getAll = async ({ status, due_date_init, due_date_end }) => {
   }
 }
 
+const  updateStatus = async (id, status) => {
+  try {
+    const query = { "_id": id };
+    const update = {
+      '$set': { "status": Number(status) }
+    };
+    //console.log('query', query)
+    //const res = await TaskModel.updateOne(query, update);
+    const task = await TaskModel.findById(id);
+    task.status = Number(status);
+    await task.save();
+    return { "update": "ok" };
+  } catch (error) {
+    throw Error({
+      message: error.message || ErrorTypes.DATABASE_QUERY,
+      errorStatus: error.errorStatus,
+      stackTrace: error.stackTrace || error,
+    });
+  }
+}
+
 export default {
   create,
   detail,
   getAll,
+  updateStatus
 };
