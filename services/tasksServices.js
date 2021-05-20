@@ -71,12 +71,12 @@ const getAll = async ({ status, due_date_init, due_date_end }) => {
 
 const  updateStatus = async (id, status) => {
   try {
-    const query = { "_id": id };
-    const update = {
-      '$set': { "status": Number(status) }
+    /*const update = {
+      "status": Number(status)
     };
-    //console.log('query', query)
-    //const res = await TaskModel.updateOne(query, update);
+    console.log('update', update)
+    await TaskModel.findByIdAndUpdate(id, update);
+    */
     const task = await TaskModel.findById(id);
     task.status = Number(status);
     await task.save();

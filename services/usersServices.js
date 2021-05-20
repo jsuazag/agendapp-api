@@ -1,14 +1,17 @@
+import bcrypt from 'bcrypt';
 import UserModel from "../models/userModel";
 import Error from "../utils/Error";
 import ErrorTypes from "../utils/ErrorTypes";
 
 const validate = async ({ email, password }) => {
   try {
-    const user = await UserModel.findOne({ email, password })
+    const user = await UserModel.findOne({ email })
     const token = 'VVVCCCZZ';
     if (user) {
-      // TODO: generar token
-      return { token };
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        return { token };
+      }
     }
     throw Error({ message: ErrorTypes.AUTHENCATION, errorStatus: 401 });
   } catch (error) {
@@ -22,16 +25,18 @@ const validate = async ({ email, password }) => {
 
 const create = async ({ name, role, email, password }) => {
   try {
-    // TODO: encrypt password
     const userCheckEmail = await UserModel.findOne({ "email": email });
     if (userCheckEmail) {
       throw Error({ message: ErrorTypes.EMAIL_DUPLICATED, errorStatus: 401 });
     }
+    const saltRounds = 10;
+    const passwordEncrypted = await bcrypt.hash(password, saltRounds);
+
     const user = UserModel({
       name,
       role,
       email,
-      password,
+      password: passwordEncrypted,
     });
     await user.save();
     return user;
