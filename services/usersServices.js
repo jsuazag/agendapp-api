@@ -23,6 +23,10 @@ const validate = async ({ email, password }) => {
 const create = async ({ name, role, email, password }) => {
   try {
     // TODO: encrypt password
+    const userCheckEmail = await UserModel.findOne({ "email": email });
+    if (userCheckEmail) {
+      throw Error({ message: ErrorTypes.EMAIL_DUPLICATED, errorStatus: 401 });
+    }
     const user = UserModel({
       name,
       role,

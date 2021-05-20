@@ -28,6 +28,20 @@ const create = async ({
   }
 };
 
+const detail = async (id) => {
+  try {
+    const task = await TaskModel.findById(id);
+    return task;
+  } catch (error) {
+    throw Error({
+      message: error.message || ErrorTypes.DATABASE_QUERY,
+      errorStatus: error.errorStatus,
+      stackTrace: error.stackTrace || error,
+    });
+  }
+}
+
 export default {
   create,
+  detail
 };

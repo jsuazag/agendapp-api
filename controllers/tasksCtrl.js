@@ -1,7 +1,13 @@
 import tasksServices from '../services/tasksServices';
 
-const detail = (req, res) => {
-    res.send('get task by id');
+const detail = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const task = await tasksServices.detail(id);
+        res.json(task);
+    } catch (error) {
+        res.status(error.errorStatus).send(error.message);
+    }
 }
 const create = async (req, res) => {
     try {
