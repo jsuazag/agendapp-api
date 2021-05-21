@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { SECRET } from '../config/constants';
 import UserModel from "../models/userModel";
 import Error from "../utils/Error";
 import ErrorTypes from "../utils/ErrorTypes";
@@ -6,10 +8,14 @@ import ErrorTypes from "../utils/ErrorTypes";
 const validate = async ({ email, password }) => {
   try {
     const user = await UserModel.findOne({ email })
-    const token = 'VVVCCCZZ';
     if (user) {
       const match = await bcrypt.compare(password, user.password);
       if (match) {
+        const payload = {
+          idUser: user.id,
+          role: user.role
+        }
+        const token = jwt.sign(payload, SECRET, { expiresIn: '12h' });
         return { token };
       }
     }
