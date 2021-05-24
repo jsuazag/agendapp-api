@@ -10,8 +10,7 @@ export const authVerify = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
     try {
       const decoded = jwt.verify(token, SECRET);
-      // TODO: agregar payload a la petición
-      console.log("decode", decoded);
+      req.user = decoded;
     } catch (error) {
         console.log('error token', error)
         res.status(401).send("Unauthorizared");

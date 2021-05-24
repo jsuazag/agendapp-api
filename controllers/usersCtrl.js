@@ -1,8 +1,8 @@
 import usersService from "../services/usersServices";
 
 const profile = async (req, res) => {
-  const id = "60a46a7a6babb01bad969c41";
-  res.send("profile");
+  const {idUser} = req.user;
+  res.send("profile: " + idUser);
 };
 
 const create = (req, res) => {
