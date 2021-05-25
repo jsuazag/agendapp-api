@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { SECRET } from '../config/constants';
+import environment from '../config/environment';
 import UserModel from "../models/userModel";
 import Error from "../utils/Error";
 import ErrorTypes from "../utils/ErrorTypes";
@@ -15,7 +15,7 @@ const validate = async ({ email, password }) => {
           idUser: user.id,
           role: user.role
         }
-        const token = jwt.sign(payload, SECRET, { expiresIn: '12h' });
+        const token = jwt.sign(payload, environment.secret, { expiresIn: '12h' });
         return { token };
       }
     }

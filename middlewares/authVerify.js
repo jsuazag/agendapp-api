@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { SECRET } from "../config/constants";
+import environment from "../config/environment";
 
 export const authVerify = (req, res, next) => {
   // authorization:Bearer XXXXYYYZZZJJJJ
@@ -9,7 +9,7 @@ export const authVerify = (req, res, next) => {
   ) {
     const token = req.headers.authorization.split(" ")[1];
     try {
-      const decoded = jwt.verify(token, SECRET);
+      const decoded = jwt.verify(token, environment.secret);
       req.user = decoded;
     } catch (error) {
         console.log('error token', error)

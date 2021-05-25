@@ -1,6 +1,7 @@
 import moongose from 'mongoose';
+import environment from '../config/environment';
 
-const url = 'mongodb+srv://agendapp_user:agenda2021@cluster0.eig00.mongodb.net/db_agendapp?retryWrites=true&w=majority';
+const url = environment.mongo_conn;
 moongose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 
 const db = moongose.connection;
