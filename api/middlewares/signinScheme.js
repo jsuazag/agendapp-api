@@ -1,4 +1,5 @@
 import Joi from "joi";
+import validation from '../../utils/ValidationSchema';
 
 export const signinScheme = (req, res, next) => {
   const scheme = Joi.object({
@@ -6,12 +7,5 @@ export const signinScheme = (req, res, next) => {
     password: Joi.string().min(6).required(),
   });
 
-  const { error, value } = scheme.validate(req.body);
-
-  if (error) {
-    console.log("error signinScheme", error);
-    res.status(400).send("fiedls mandatory");
-  } else {
-    next();
-  }
+  validation({ res, data: req.body, scheme, next });
 };
