@@ -1,5 +1,6 @@
 import express from "express";
 import mongodb from './connection/mongoconn';
+import sequalize from './connection/postgresconn';
 import cors from 'cors';
 const app = express();
 app.use(express.json());
