@@ -1,4 +1,5 @@
-import { DataTypes } from "sequelize";
+import pkg from 'sequelize';
+const { DataTypes } = pkg;
 import sequalize from "../connection/postgresconn";
 
 export const LogAgenda = sequalize.define(
@@ -22,5 +23,6 @@ export const LogAgenda = sequalize.define(
   {
     //freezeTableName: true
     tableName: "agendapp_logs",
+    //timestamps: false
   }
 );

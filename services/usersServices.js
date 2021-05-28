@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import LogsServices from './logsServices';
 import environment from '../config/environment';
 import UserModel from "../models/userModel";
 import Error from "../utils/Error";
@@ -14,7 +15,8 @@ const validate = async ({ email, password }) => {
         const payload = {
           idUser: user.id,
           role: user.role
-        }
+        };
+        await LogsServices.create({ who: user.id, log: "LOGIN USER" });
         const token = jwt.sign(payload, environment.secret, { expiresIn: '12h' });
         return { token };
       }
