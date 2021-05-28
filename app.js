@@ -9,6 +9,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 4000;
 
+import job from './jobs/dueDateTasksJob';
 import api from './api';
 
 app.use('/', api());
